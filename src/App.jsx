@@ -7,6 +7,9 @@ function App() {
   const [mostrarBotonTop, setMostrarBotonTop] = useState(false);
   const [progresoScroll, setProgresoScroll] = useState(0);
   const [modalDonacionAbierto, setModalDonacionAbierto] = useState(false);
+  
+  {/* Nuevo estado para controlar qué artista se está viendo en el modal */}
+  const [artistaSeleccionado, setArtistaSeleccionado] = useState(null);
 
   useEffect(() => {
     const evaluarScroll = () => {
@@ -239,7 +242,7 @@ function App() {
               </div>
             </div>
 
-            {/* 4. CARTELERA CULTURAL & REDES (Con Facebook restaurado) */}
+            {/* 4. CARTELERA CULTURAL & REDES */}
             <div className="bg-white border-2 border-stone-300 rounded-xl shadow-md p-4">
               <h4 className="text-stone-950 font-serif text-xs tracking-wide mb-3 border-b-2 pb-1.5 border-stone-200 font-bold">
                 Actividades & Redes
@@ -273,33 +276,40 @@ function App() {
         <section id="coleccion" className="mb-16 pt-6 border-t-2 border-stone-300">
           <div className="border-b-2 border-stone-300 pb-2 mb-8">
             <h3 className="text-xl font-serif text-stone-950 tracking-wide font-bold">Creadores en la Muestra</h3>
-            <p className="text-xs text-stone-600 uppercase tracking-widest mt-1 font-bold">Maestros y nuevas voces de la plástica oriental venezolana.</p>
+            <p className="text-xs text-stone-600 uppercase tracking-widest mt-1 font-bold">Maestros y nuevas voces de la plástica oriental venezolana. Haz clic en la obra para ver detalles.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {artistasColeccion.map((artista) => (
-              <div key={artista.id} className="bg-white rounded-2xl shadow-md overflow-hidden border border-stone-300 flex flex-col hover:shadow-lg transition-all duration-300 group">
+              <div 
+                key={artista.id} 
+                onClick={() => setArtistaSeleccionado(artista)}
+                className="bg-white rounded-2xl shadow-md overflow-hidden border border-stone-300 flex flex-col hover:shadow-lg transition-all duration-300 group cursor-pointer"
+              >
                 
-{/* Cambiado bg-stone-900 por bg-stone-50 para integrarse con el fondo general */}
-<div className="h-56 overflow-hidden bg-stone-50 relative border-b border-stone-200 flex items-center justify-center">
-  
-  {/* Imagen con object-contain para que no se corte */}
-  <img 
-    src={artista.imagen} 
-    alt={artista.nombre} 
-    className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-700 ease-out" 
-  />
-  
-  <span className="absolute bottom-3 right-3 bg-stone-950 text-stone-100 text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-md border border-white/20 z-10">
-    {artista.estilo}
-  </span>
-</div>
+                {/* Contenedor de la foto integrado con bg-stone-50 */}
+                <div className="h-56 overflow-hidden bg-stone-50 relative border-b border-stone-200 flex items-center justify-center">
+                  <img 
+                    src={artista.imagen} 
+                    alt={artista.nombre} 
+                    className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-700 ease-out" 
+                  />
+                  <span className="absolute bottom-3 right-3 bg-stone-950 text-stone-100 text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-md border border-white/20 z-10">
+                    {artista.estilo}
+                  </span>
+                  {/* Overlay sutil que indica que es interactivo */}
+                  <div className="absolute inset-0 bg-stone-950/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="bg-white/90 backdrop-blur-sm text-stone-950 text-xs font-bold px-3 py-1.5 rounded-xl shadow-md border border-stone-200 scale-95 group-hover:scale-100 transition-transform duration-300">
+                      Ver Especificaciones
+                    </span>
+                  </div>
+                </div>
                 
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     <h4 className="font-serif font-bold text-base text-stone-950 tracking-wide mb-1">{artista.nombre}</h4>
                     <p className="text-[10px] text-rose-900 font-extrabold tracking-wider uppercase mb-2">{artista.origen}</p>
-                    <p className="text-xs md:text-sm text-stone-800 text-justify font-bold leading-relaxed line-clamp-5">{artista.biografia}</p>
+                    <p className="text-xs md:text-sm text-stone-800 text-justify font-bold leading-relaxed line-clamp-3">{artista.biografia}</p>
                   </div>
                 </div>
               </div>
@@ -343,32 +353,21 @@ function App() {
         </div>
       </footer>
 
-      {/* ================= MODAL INTERACTIVO DE CONTRIBUCIONES ================= */}
+      {/* ================= MODAL DE DONACIONES ================= */}
       {modalDonacionAbierto && (
-        <div className="fixed inset-0 bg-stone-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300">
-          <div className="bg-white rounded-2xl max-w-md w-full border border-stone-300 shadow-2xl overflow-hidden transform scale-100 transition-all">
-            
-            {/* Cabecera del Modal */}
+        <div className="fixed inset-0 bg-stone-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full border border-stone-300 shadow-2xl overflow-hidden">
             <div className="bg-rose-950 p-5 text-stone-100 flex justify-between items-center border-b border-rose-900">
               <div>
                 <h3 className="font-serif font-bold text-base tracking-wide">Fondo Patrimonial</h3>
                 <p className="text-[10px] text-rose-200 font-bold uppercase tracking-widest mt-0.5">Soporte & Mecenazgo Cultural</p>
               </div>
-              <button 
-                onClick={() => setModalDonacionAbierto(false)}
-                className="text-stone-400 hover:text-white font-mono text-xl font-bold transition-colors p-1"
-              >
-                &#x2715;
-              </button>
+              <button onClick={() => setModalDonacionAbierto(false)} className="text-stone-400 hover:text-white font-mono text-xl font-bold p-1">&#x2715;</button>
             </div>
-
-            {/* Contenido del Modal */}
             <div className="p-6 space-y-4 text-xs font-bold">
               <p className="text-stone-700 text-justify font-medium leading-relaxed">
                 Agradecemos tu interés en respaldar los programas de digitalización y montaje físico de la Galería. Puedes realizar tu aporte a través de los siguientes canales oficiales:
               </p>
-
-              {/* Opción 1: Pago Móvil / Banco Local */}
               <div className="p-3 bg-stone-50 border border-stone-300 rounded-xl space-y-1">
                 <span className="text-[10px] text-rose-900 uppercase tracking-wider block">Transferencia Nacional / Pago Móvil</span>
                 <div className="text-stone-950 font-mono space-y-0.5 text-[11px]">
@@ -377,8 +376,6 @@ function App() {
                   <div><span className="text-stone-500 font-sans">Teléfono:</span> 0412-1234567</div>
                 </div>
               </div>
-
-              {/* Opción 2: Plataformas Digitales */}
               <div className="p-3 bg-stone-50 border border-stone-300 rounded-xl space-y-1">
                 <span className="text-[10px] text-rose-900 uppercase tracking-wider block">Canales Internacionales</span>
                 <div className="text-stone-950 font-mono space-y-0.5 text-[11px]">
@@ -386,20 +383,87 @@ function App() {
                   <div><span className="text-stone-500 font-sans">Ko-fi:</span> ko-fi.com/galeriapedrobaez</div>
                 </div>
               </div>
+            </div>
+            <div className="bg-stone-100 px-6 py-4 flex justify-end border-t border-stone-200">
+              <button onClick={() => setModalDonacionAbierto(false)} className="bg-stone-950 hover:bg-rose-900 text-stone-100 font-bold uppercase tracking-wider text-[11px] px-5 py-2 rounded-xl">Entendido</button>
+            </div>
+          </div>
+        </div>
+      )}
 
-              <p className="text-[10px] text-stone-500 italic text-center font-medium pt-1">
-                Una vez realizada la transacción, puedes enviar el comprobante a nuestro correo oficial.
-              </p>
+      {/* ================= NEW: MODAL DETALLADO DE ESPECIFICACIONES DE LA OBRA ================= */}
+      {artistaSeleccionado && (
+        <div 
+          className="fixed inset-0 bg-stone-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 animate-fadeIn"
+          onClick={() => setArtistaSeleccionado(null)}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-2xl w-full border border-stone-300 shadow-2xl overflow-hidden md:flex max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-y-visible"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Izquierda: Vista limpia e iluminada de la obra */}
+            <div className="bg-stone-50 md:w-1/2 p-6 flex items-center justify-center border-b md:border-b-0 md:border-r border-stone-200 min-h-[250px] md:min-h-0">
+              <img 
+                src={artistaSeleccionado.imagen} 
+                alt={artistaSeleccionado.nombre} 
+                className="max-w-full max-h-[40vh] md:max-h-[50vh] object-contain drop-shadow-md rounded"
+              />
             </div>
 
-            {/* Botón de Cierre */}
-            <div className="bg-stone-100 px-6 py-4 flex justify-end border-t border-stone-200">
-              <button 
-                onClick={() => setModalDonacionAbierto(false)}
-                className="bg-stone-950 hover:bg-rose-900 text-stone-100 font-bold uppercase tracking-wider text-[11px] px-5 py-2 rounded-xl transition-all duration-300"
-              >
-                Entendido
-              </button>
+            {/* Derecha: Cartela Museográfica (Especificaciones Técnicas) */}
+            <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-6">
+              <div>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="text-[10px] text-rose-900 font-extrabold uppercase tracking-widest">Ficha Técnica Oficial</span>
+                    <h3 className="font-serif font-bold text-xl text-stone-950 tracking-wide mt-1 leading-tight">{artistaSeleccionado.nombre}</h3>
+                  </div>
+                  <button 
+                    onClick={() => setArtistaSeleccionado(null)} 
+                    className="text-stone-400 hover:text-stone-950 font-mono text-lg font-bold p-1 leading-none transition-colors"
+                  >
+                    &#x2715;
+                  </button>
+                </div>
+
+                {/* Tabla de Especificaciones Fijas */}
+                <div className="mt-4 border-t border-stone-200 pt-3 space-y-2 text-xs font-bold">
+                  <div className="flex justify-between border-b border-stone-100 pb-1.5">
+                    <span className="text-stone-500 font-medium">Procedencia:</span>
+                    <span className="text-stone-950">{artistaSeleccionado.origen}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-stone-100 pb-1.5">
+                    <span className="text-stone-500 font-medium">Movimiento / Estilo:</span>
+                    <span className="text-rose-900 uppercase tracking-wider text-[10px]">{artistaSeleccionado.estilo}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-stone-100 pb-1.5">
+                    <span className="text-stone-500 font-medium">Ubicación en Sala:</span>
+                    <span className="text-stone-950">Muestra Permanente (Sala Principal)</span>
+                  </div>
+                  <div className="flex justify-between pb-1">
+                    <span className="text-stone-500 font-medium">Disponibilidad:</span>
+                    <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[10px]">En Exhibición</span>
+                  </div>
+                </div>
+
+                {/* Biografía / Contexto Curatorial Completo */}
+                <div className="mt-4">
+                  <span className="text-[10px] text-stone-500 uppercase tracking-wider block mb-1">Reseña Curatorial</span>
+                  <p className="text-stone-800 text-justify text-xs md:text-sm font-semibold leading-relaxed max-h-[150px] overflow-y-auto pr-1">
+                    {artistaSeleccionado.biografia}
+                  </p>
+                </div>
+              </div>
+
+              {/* Botón de Cierre del Catálogo */}
+              <div className="pt-4 border-t border-stone-200 flex justify-end">
+                <button 
+                  onClick={() => setArtistaSeleccionado(null)}
+                  className="bg-stone-950 hover:bg-rose-900 text-stone-100 font-bold uppercase tracking-wider text-[10px] px-4 py-2 rounded-xl transition-all duration-300 shadow-sm"
+                >
+                  Cerrar Ficha
+                </button>
+              </div>
             </div>
 
           </div>
