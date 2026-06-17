@@ -155,10 +155,21 @@ export const artistasColeccion = [
   },
 ];
 
+// ... Todo lo demás en galeriaData.js se mantiene exactamente IGUAL
+
+// ... Todo lo demás en galeriaData.js se mantiene exactamente igual
+
 export const fotosInstalaciones = [
-  { id: 1, src: lugar1, titulo: "Fachada Principal", desc: "Entrada principal de la Galería de Arte Pedro Báez." },
-  { id: 2, src: lugar2, titulo: "Sala de Exposición Oriental", desc: "Espacio amplio dedicado a las muestras de pintura y escultura." },
-  { id: 3, src: lugar3, titulo: "Pasillo de Grabados", desc: "Área de iluminación controlada para la conservación de obras en papel." },
-  { id: 4, src: lugar4, titulo: "Muestra de Esculturas", desc: "Zona de exhibición tridimensional e instalaciones in situ." },
-  { id: 5, src: lugar5, titulo: "Área de Contemplación", desc: "Espacio diseñado para la lectura y el estudio activo del arte regional." }
+  { 
+    id: 1, 
+    titulo: "Fachada Principal y Entorno", 
+    desc: "Entrada principal de la Galería de Arte Pedro Báez y perspectivas del lugar.",
+    imagenes: [lugar1, lugar2, lugar5] // <-- Ahora tiene 3 fotos integradas
+  },
+  { 
+    id: 2, 
+    titulo: "Pasillo de Grabados", 
+    desc: "Área de iluminación controlada para la conservación de obras.",
+    imagenes: [lugar3, lugar4] // <-- Tiene 2 fotos integradas
+  }
 ];
