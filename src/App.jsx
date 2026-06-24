@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { infoInstitucional, artistasColeccion, fotosInstalaciones } from "./data/galeriaData";
+import logoANZ from "./assets/ANZ.png";
 
 function App() {
   const [indexTarjeta1, setIndexTarjeta1] = useState(0);
@@ -7,8 +8,6 @@ function App() {
   const [mostrarBotonTop, setMostrarBotonTop] = useState(false);
   const [progresoScroll, setProgresoScroll] = useState(0);
   const [modalDonacionAbierto, setModalDonacionAbierto] = useState(false);
-  
-  {/* Nuevo estado para controlar qué artista se está viendo en el modal */}
   const [artistaSeleccionado, setArtistaSeleccionado] = useState(null);
 
   useEffect(() => {
@@ -47,20 +46,33 @@ function App() {
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased selection:bg-rose-900 selection:text-white text-sm md:text-base font-medium">
       
-      {/* Navbar Premium con Glassmorphism */}
+      {/* Navbar Premium con Glassmorphism y Logo Icanz */}
       <header className="bg-rose-950/95 text-stone-100 shadow-md sticky top-0 z-50 backdrop-blur-md border-b border-rose-900/30">
         <div 
           className="absolute top-0 left-0 h-[3px] bg-gradient-to-r from-rose-400 via-rose-500 to-amber-400 transition-all duration-100 ease-out z-50"
           style={{ width: `${progresoScroll}%` }}
         />
 
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-xl md:text-2xl font-serif tracking-widest uppercase font-bold">
-            Galería <span className="font-light text-rose-200">Pedro Báez</span>
-          </h1>
+        <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+          
+          {/* Contenedor Alineado: Logo Institucional + Título */}
+          <div className="flex items-center gap-4">
+            
+          <img 
+            src={logoANZ} 
+            alt="Logo ICANZ Anzoátegui" 
+            className="h-10 md:h-12 w-auto object-contain mix-blend-screen" 
+            style={{ filter: "grayscale(1) brightness(1) contrast(2) invert(1)" }}
+          />
+            
+            <h1 className="text-xl md:text-2xl font-serif tracking-widest uppercase font-bold leading-tight">
+              Galería <span className="font-light text-rose-200 block md:inline text-lg md:text-2xl">Pedro Báez</span>
+            </h1>
+          </div>
+
           <nav className="hidden md:flex space-x-8 text-xs font-bold tracking-widest uppercase">
             <a href="#inicio" className="hover:text-rose-200 transition-colors duration-300">Inicio</a>
-            <a href="#institucional" className="hover:text-rose-200 transition-colors duration-300">Institución</a>
+            <a href="#institucional" className="hover:text-rose-200 transition-colors duration-300">Instalación</a>
             <a href="#instalaciones" className="hover:text-rose-200 transition-colors duration-300">Instalaciones</a>
             <a href="#coleccion" className="hover:text-rose-200 transition-colors duration-300">Colección</a>
             <a href="#contacto" className="hover:text-rose-200 transition-colors duration-300">Ubicación</a>
@@ -391,7 +403,7 @@ function App() {
         </div>
       )}
 
-      {/* ================= NEW: MODAL DETALLADO DE ESPECIFICACIONES DE LA OBRA ================= */}
+      {/* ================= MODAL DETALLADO DE ESPECIFICACIONES DE LA OBRA ================= */}
       {artistaSeleccionado && (
         <div 
           className="fixed inset-0 bg-stone-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 animate-fadeIn"
@@ -401,7 +413,7 @@ function App() {
             className="bg-white rounded-2xl max-w-2xl w-full border border-stone-300 shadow-2xl overflow-hidden md:flex max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-y-visible"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Izquierda: Vista limpia e iluminada de la obra */}
+            {/* Izquierda: Vista de la obra */}
             <div className="bg-stone-50 md:w-1/2 p-6 flex items-center justify-center border-b md:border-b-0 md:border-r border-stone-200 min-h-[250px] md:min-h-0">
               <img 
                 src={artistaSeleccionado.imagen} 
@@ -410,12 +422,12 @@ function App() {
               />
             </div>
 
-            {/* Derecha: Cartela Museográfica (Especificaciones Técnicas) */}
+            {/* Derecha: Cartela Museográfica */}
             <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-6">
               <div>
                 <div className="flex justify-between items-start">
                   <div>
-                    <span className="text-[10px] text-rose-900 font-extrabold uppercase tracking-widest">Ficha Técnica Oficial</span>
+                    <span className="text-[10px] text-rose-900 font-extrabold uppercase tracking-widest">Ficha Técnico Oficial</span>
                     <h3 className="font-serif font-bold text-xl text-stone-950 tracking-wide mt-1 leading-tight">{artistaSeleccionado.nombre}</h3>
                   </div>
                   <button 
@@ -426,7 +438,6 @@ function App() {
                   </button>
                 </div>
 
-                {/* Tabla de Especificaciones Fijas */}
                 <div className="mt-4 border-t border-stone-200 pt-3 space-y-2 text-xs font-bold">
                   <div className="flex justify-between border-b border-stone-100 pb-1.5">
                     <span className="text-stone-500 font-medium">Procedencia:</span>
@@ -446,7 +457,6 @@ function App() {
                   </div>
                 </div>
 
-                {/* Biografía / Contexto Curatorial Completo */}
                 <div className="mt-4">
                   <span className="text-[10px] text-stone-500 uppercase tracking-wider block mb-1">Reseña Curatorial</span>
                   <p className="text-stone-800 text-justify text-xs md:text-sm font-semibold leading-relaxed max-h-[150px] overflow-y-auto pr-1">
@@ -455,7 +465,6 @@ function App() {
                 </div>
               </div>
 
-              {/* Botón de Cierre del Catálogo */}
               <div className="pt-4 border-t border-stone-200 flex justify-end">
                 <button 
                   onClick={() => setArtistaSeleccionado(null)}
