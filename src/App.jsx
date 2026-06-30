@@ -73,7 +73,6 @@ function App() {
           <nav className="hidden md:flex space-x-8 text-xs font-bold tracking-widest uppercase">
             <a href="#inicio" className="hover:text-rose-200 transition-colors duration-300">Inicio</a>
             <a href="#institucional" className="hover:text-rose-200 transition-colors duration-300">Instalación</a>
-            <a href="#instalaciones" className="hover:text-rose-200 transition-colors duration-300">Instalaciones</a>
             <a href="#coleccion" className="hover:text-rose-200 transition-colors duration-300">Colección</a>
             <a href="#contacto" className="hover:text-rose-200 transition-colors duration-300">Ubicación</a>
           </nav>
@@ -158,7 +157,7 @@ function App() {
                       
                       {tieneVarias && (
                         <button onClick={(e) => index === 0 ? alternarTarjeta1(e, foto.imagenes.length) : alternarTarjeta2(e, foto.imagenes.length)} className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-stone-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center text-white text-xl z-10 font-bold">
-                          &#10230;
+                          ⟶
                         </button>
                       )}
                       
@@ -352,7 +351,7 @@ function App() {
       {/* Footer Estilizado */}
       <footer className="bg-stone-950 text-stone-300 py-8 text-xs border-t-2 border-stone-900 font-bold tracking-wide mt-12">
         <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-center sm:text-left text-stone-400">&copy; 2026 {infoInstitucional.nombre}. {infoInstitucional.ubicacion}. All rights reserved.</p>
+          <p className="text-center sm:text-left text-stone-400">© 2026 {infoInstitucional.nombre}. {infoInstitucional.ubicacion}. All rights reserved.</p>
           <a 
             href="https://github.com/jh0n1joe" 
             target="_blank" 
@@ -374,7 +373,7 @@ function App() {
                 <h3 className="font-serif font-bold text-base tracking-wide">Fondo Patrimonial</h3>
                 <p className="text-[10px] text-rose-200 font-bold uppercase tracking-widest mt-0.5">Soporte & Mecenazgo Cultural</p>
               </div>
-              <button onClick={() => setModalDonacionAbierto(false)} className="text-stone-400 hover:text-white font-mono text-xl font-bold p-1">&#x2715;</button>
+              <button onClick={() => setModalDonacionAbierto(false)} className="text-stone-400 hover:text-white font-mono text-xl font-bold p-1">✕</button>
             </div>
             <div className="p-6 space-y-4 text-xs font-bold">
               <p className="text-stone-700 text-justify font-medium leading-relaxed">
@@ -434,7 +433,7 @@ function App() {
                     onClick={() => setArtistaSeleccionado(null)} 
                     className="text-stone-400 hover:text-stone-950 font-mono text-lg font-bold p-1 leading-none transition-colors"
                   >
-                    &#x2715;
+                    ✕
                   </button>
                 </div>
 
@@ -487,7 +486,7 @@ function App() {
         }`}
         title="Volver arriba"
       >
-        <span className="text-base font-bold transform -rotate-90 block leading-none">&#10230;</span>
+        <span className="text-base font-bold transform -rotate-90 block leading-none">⟶</span>
       </button>
 
     </div>
